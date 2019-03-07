@@ -41,7 +41,7 @@ class PageCache{
 	 * @param string $key
 	 * @param string $value
 	 */
-	public static function cache_header($key,$value=null){
+	public static function cacheHeader($key,$value=null){
 		if (is_array($key)) foreach ($key as $k=>$v)self::$headers[$k]=$v;
 		else self::$headers[$key]=$value;
 		foreach (self::$headers as $k=>$v){
@@ -159,7 +159,7 @@ class PageCache{
 	 * check is flush
 	 * @return boolean
 	 */
-	protected function _client_flush(){
+	protected function _clientFlush(){
 		return isset($_SERVER['HTTP_PRAGMA'])&&$_SERVER['HTTP_PRAGMA']=='no-cache';
 	}
 	/**
@@ -181,9 +181,9 @@ class PageCache{
 	 * @return \LSYS\PageCache
 	 */
 	public function check(){
-		if($this->_client_flush()||!self::LEVEL_SERVER&$this->_level) return $this;//强制刷新或服务器不缓存
+		if($this->_clientFlush()||!self::LEVEL_SERVER&$this->_level) return $this;//强制刷新或服务器不缓存
 		$cache_key=$this->_param();
-		$data=$this->_cache->get_data($cache_key);
+		$data=$this->_cache->getData($cache_key);
 		
 		if ($data===false) return $this;//缓存未发现
 		
@@ -199,7 +199,7 @@ class PageCache{
 			return $this->_output->output(false, array(), $data);
 		}
 		
-		$meta=$this->_cache->get_meta($cache_key);
+		$meta=$this->_cache->getMeta($cache_key);
 		
 		$create_time=0;
 		$cache_time=0;

@@ -20,12 +20,12 @@ interface Storage{
 	 * 获取缓存的相关信息
 	 * @param string $key
 	 */
-	public function get_meta($key);
+	public function getMeta($key);
 	/**
 	 * 获取缓存的内容
 	 * @param string $key
 	 */
-	public function get_data($key);
+	public function getData($key);
 	/**
 	 * 得到一个缓存进行时的锁[保证原子性,目的:多个访客同时访问时,都进入缓存处理,可能导致缓存错乱]
 	 * @param string $key

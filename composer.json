@@ -2,7 +2,7 @@
 	"name": "lsys/pagecache",
 	"type" : "library",
 	"license": "Apache-2.0",
-	"version" : "1.0.0",
+	"version" : "2.0.0",
 	"description" : "lsys module pagecache",
 	"autoload":{
 		"psr-4": {
@@ -13,12 +13,12 @@
      	"php": ">=5.5"
 	},
 	"require-dev" : {
-		"lsys/config":"~1.0.0",
-		"lsys/pagecache-redis" : "~1.0.0"
+		"lsys/config":"~2.0.0",
+		"lsys/pagecache-redis" : "~2.0.0"
 	},
 	"suggest": {
-        "lsys/pagecache-memcache" : "~1.0.0",
-        "lsys/pagecache-redis" : "~1.0.0",
-        "lsys/pagecache-memcached" : "~1.0.0"
+        "lsys/pagecache-memcache" : "~2.0.0",
+        "lsys/pagecache-redis" : "~2.0.0",
+        "lsys/pagecache-memcached" : "~2.0.0"
     }
 }
