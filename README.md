@@ -8,9 +8,9 @@
 
 > 缓存存放可使用以下包:
 
-	"lsys/pagecache-memcache" : "~1.0.0",
-	"lsys/pagecache-redis" : "~1.0.0",
-	"lsys/pagecache-memcached" : "~1.0.0"
+	"lsys/pagecache-memcache" : "~2.0.0",
+	"lsys/pagecache-redis" : "~2.0.0",
+	"lsys/pagecache-memcached" : "~2.0.0"
 
 
 
