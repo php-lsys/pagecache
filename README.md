@@ -6,14 +6,6 @@
 > 加入简单,仅仅需在执行头部增加拦截代码即可
 
 
-> 缓存存放可使用以下包:
-
-	"lsys/pagecache-memcache" : "~2.0.0",
-	"lsys/pagecache-redis" : "~2.0.0",
-	"lsys/pagecache-memcached" : "~2.0.0"
-
-
-
 使用示例:
 ```
 //只需要头部增加缓存拦截即可
