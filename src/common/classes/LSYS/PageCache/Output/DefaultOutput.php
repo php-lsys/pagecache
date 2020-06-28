@@ -9,7 +9,7 @@
 namespace LSYS\PageCache\Output;
 use LSYS\PageCache\Output;
 class DefaultOutput implements Output{
-	public function output($not_modified,$headers,$cache_data){
+	public function output(bool $not_modified,array $headers,string $cache_data):void{
 		foreach ($headers as $k=>$v)header($k.": ".$v);
 		if ($not_modified){
 			http_response_code(304);

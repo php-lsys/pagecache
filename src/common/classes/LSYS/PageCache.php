@@ -26,22 +26,22 @@ class PageCache{
 	}
 	/**
 	 * 检查是否缓存并替换动态内如
-	 * @param string $key 缓存KEY
+	 * @param mixed $key 缓存KEY
 	 * @param number $time 缓存不可用时,缓存存储时间
 	 * @param array $replace 动态内容替换
 	 * @param int $level 缓存方式 
 	 */
-	public static function cache($key,$time=10860,$replace=array(),$level=NULL){
+	public static function cache($key,int $time=10860,array $replace=array(),int $level=NULL){
 		if (!self::$_instance)return ;
 		self::$_instance->param($key,$replace,$level)->check()->start($time);
 	}
 	protected static $headers=array();
 	/**
 	 * 缓存时,添加需要进行缓存的消息头 
-	 * @param string $key
+	 * @param string|array $key
 	 * @param string $value
 	 */
-	public static function cacheHeader($key,$value=null){
+	public static function cacheHeader($key,string $value=null):void{
 		if (is_array($key)) foreach ($key as $k=>$v)self::$headers[$k]=$v;
 		else self::$headers[$key]=$value;
 		foreach (self::$headers as $k=>$v){
@@ -54,9 +54,9 @@ class PageCache{
 	 */
 	/**
 	 * 页面操作完成时,是否进行缓存的处理函数
-	 * @param string $status 是否对输出进行缓存
+	 * @param bool $status 是否对输出进行缓存
 	 */
-	public static function shutdown($status=null){
+	public static function shutdown(?bool $status=null):void{
 		if (!self::$_instance)return;
 		if ($status===null){
 			$error = error_get_last();
@@ -105,7 +105,7 @@ class PageCache{
 	 * @param array $param
 	 * @return \LSYS\PageCache
 	 */
-	public function param($key,$replace=array(),$level=NULL){
+	public function param($key,array $replace=array(),int $level=NULL){
 		if (is_array($key)){
 			$this->_filter($key);
 			$key=json_encode($key);
@@ -135,15 +135,15 @@ class PageCache{
 	/**
 	 * @return string
 	 */
-	private function _param(){
-		return $this->_param;
+	private function _param():string{
+		return (string)$this->_param;
 	}
 	/**
 	 * create etag from body
 	 * @param string $body
 	 * @return string
 	 */
-	protected function _etag($body){
+	protected function _etag(string $body):string{
 		return sha1($body);
 	}
 	/**
@@ -151,7 +151,7 @@ class PageCache{
 	 * @param string $preg
 	 * @return NULL|string
 	 */
-	protected function _replace($preg){
+	protected function _replace(?string $preg):string{
 		if (empty($preg))return null;
 		return '<!--page_cache_'.md5(trim($preg)).'-->';
 	}
@@ -159,7 +159,7 @@ class PageCache{
 	 * check is flush
 	 * @return boolean
 	 */
-	protected function _clientFlush(){
+	protected function _clientFlush():bool{
 		return isset($_SERVER['HTTP_PRAGMA'])&&$_SERVER['HTTP_PRAGMA']=='no-cache';
 	}
 	/**
@@ -167,7 +167,7 @@ class PageCache{
 	 * @param number $time
 	 * @return boolean|\LSYS\PageCache
 	 */
-	public function start($time=10860){
+	public function start(int $time=10860){
 		if ($this->_is_check)return false;
 		if ($time<=0||!$this->_cache->lock($this->_param()))return false;
 		$this->_is_lock=true;
@@ -243,12 +243,12 @@ class PageCache{
 		}
 		$data=ob_get_contents();
 		ob_end_clean();
-		return $this->_output->output(false, $headers,$data);
+		$this->_output->output(false, $headers,$data);
 	}
 	/**
 	 * end page cache
 	 */
-	public function end($cache_header=array()){
+	public function end(array $cache_header=array()){
 		
 		if ($this->_is_check||$this->_time<=0)return;
 		$data=$_data=ob_get_contents();
@@ -273,7 +273,7 @@ class PageCache{
 		}
 		$cache_key=$this->_param();
 		if ($this->_level&self::LEVEL_SERVER){
-			foreach ($this->_replace as $k=>$v){
+		    foreach (array_keys($this->_replace) as $k){
 				$_data=preg_replace($k, $this->_replace($k), $_data);
 			}
 			$this->_cache->set($cache_key,serialize(array(
@@ -283,7 +283,7 @@ class PageCache{
 			)),$_data,$this->_time+1);
 		}
 		$this->_cache->unlock($cache_key);
-		return $this->_output->output($not_mod, $headers, $data);
+		$this->_output->output($not_mod, $headers, $data);
 	}
 	/**
 	 * destruct free cache lock

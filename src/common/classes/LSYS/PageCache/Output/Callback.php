@@ -12,7 +12,7 @@ class Callback implements Output{
 	public function __construct(callable $callable){
 		$this->_callable=$callable;
 	}
-	public function output($not_modified,$headers,$cache_data){
-		return call_user_func_array($this->_callable, func_get_args());
+	public function output(bool $not_modified,array $headers,string $cache_data):void{
+		call_user_func_array($this->_callable, func_get_args());
 	}
 }

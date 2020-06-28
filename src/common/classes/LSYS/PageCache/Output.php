@@ -13,5 +13,5 @@ interface Output{
 	 * @param string $headers 缓存结果需要发送的消息头,包含ETAG信息,需发送给浏览器
 	 * @param string $cache_data 缓存页面内容
 	 */
-	public function output($not_modified,$headers,$cache_data);
+	public function output(bool $not_modified,array $headers,string $cache_data):void;
 }
